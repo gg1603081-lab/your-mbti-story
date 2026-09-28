@@ -44,8 +44,10 @@ function Types() {
 
       <main className="mx-auto max-w-6xl px-6 pb-20">
         <p className="eyebrow">The 16 types</p>
-        <h1 className="mt-5 max-w-[20ch] font-display text-[clamp(2rem,5vw,3.5rem)] leading-tight font-black tracking-tight text-ink text-balance">
-          네 개의 축이 만드는 열여섯 개의 얼굴
+        <h1 className="mt-5 font-display text-[clamp(2rem,5vw,3.5rem)] leading-tight font-black tracking-tight text-ink text-balance">
+          네 개의 축이 만드는
+          <br className="hidden sm:block" />
+          열여섯 개의 얼굴
         </h1>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
