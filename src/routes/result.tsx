@@ -114,8 +114,10 @@ function Result() {
               {type.code.split("").map((letter, i) => (
                 <span
                   key={i}
-                  className="animate-letter font-display text-[clamp(4.5rem,15vw,10rem)] leading-[0.8] font-black tracking-tighter text-ink"
-                  style={{ animationDelay: `${i * 110}ms`, color: i === 3 ? undefined : undefined }}
+                  className={`animate-letter font-display text-[clamp(4.5rem,15vw,10rem)] leading-[0.8] font-black tracking-tighter ${
+                    i === 3 ? "text-accent" : "text-ink"
+                  }`}
+                  style={{ animationDelay: `${i * 110}ms` }}
                 >
                   {letter}
                 </span>
@@ -172,7 +174,7 @@ function Result() {
         </section>
 
         <p className="mt-10 font-mono text-[10px] leading-relaxed tracking-[0.2em] uppercase text-muted">
-          MBTI는 자신을 돌아보는 도구입니다.진단이나 판결의 기준이 아닙니다.
+          MBTI는 자신을 돌아보는 도구입니다. 진단이나 판결의 기준이 아닙니다.
         </p>
       </main>
     </div>

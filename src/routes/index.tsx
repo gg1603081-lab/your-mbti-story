@@ -199,7 +199,7 @@ function Index() {
 
       <footer className="mx-auto max-w-6xl px-6 py-10">
         <p className="font-mono text-[10px] leading-relaxed tracking-[0.2em] uppercase text-muted">
-          성격지도 — MBTI는 자신을 돌아보는 도구입니다.진단이나 판결의 기준이 아닙니다.
+          성격지도 — MBTI는 자신을 돌아보는 도구입니다. 진단이나 판결의 기준이 아닙니다.
         </p>
       </footer>
     </div>
