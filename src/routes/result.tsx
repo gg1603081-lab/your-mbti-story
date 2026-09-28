@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AxisScale } from "@/components/AxisScale";
 import { TypeReport } from "@/components/TypeReport";
 import { QUESTIONS, computeResult, getType, type Answers } from "@/lib/mbti";
-import { clearAnswers, loadAnswers } from "@/lib/quiz-store";
+import { clearAnswers, loadAnswers, loadHistory } from "@/lib/quiz-store";
 
 export const Route = createFileRoute("/result")({
   component: Result,
@@ -21,15 +21,26 @@ export const Route = createFileRoute("/result")({
   }),
 });
 
+type HistoryRow = { id: string; type_code: string; created_at: string };
+
 function Result() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState<Answers | null>(null);
+  const [history, setHistory] = useState<HistoryRow[]>([]);
   const [ready, setReady] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setAnswers(loadAnswers());
-    setReady(true);
+    let alive = true;
+    Promise.all([loadAnswers(), loadHistory()]).then(([a, h]) => {
+      if (!alive) return;
+      setAnswers(a as Answers | null);
+      setHistory(h);
+      setReady(true);
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   if (!ready) {
@@ -55,6 +66,7 @@ function Result() {
           >
             테스트 계속하기 <span className="font-mono">→</span>
           </Link>
+          <HistoryList rows={history} />
         </div>
       </div>
     );
@@ -87,8 +99,8 @@ function Result() {
     }
   };
 
-  const restart = () => {
-    clearAnswers();
+  const restart = async () => {
+    await clearAnswers();
     navigate({ to: "/test" });
   };
 
