@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import type { TypeData } from "@/lib/mbti";
+import { TYPES, type TypeData } from "@/lib/mbti";
 
 function SectionLabel({
   children,
@@ -79,7 +79,7 @@ export function TypeReport({ type }: { type: TypeData }) {
                   {m.code}
                 </span>
                 <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted">
-                  {m.ko}
+                  {TYPES[m.code]?.ko ?? m.code}
                 </span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-ink-2">{m.note}</p>

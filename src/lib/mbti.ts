@@ -20,7 +20,7 @@ export type TypeData = {
   work: string;
   stress: string;
   fields: string[];
-  matches: { code: string; ko: string; note: string }[];
+  matches: { code: string; note: string }[];
 };
 
 export const SCALE = [
@@ -158,10 +158,7 @@ export function computeResult(answers: Answers): Result {
   return { code: letters.join(""), letters: letters as Letter[], percentages };
 }
 
-const MATCH = (code: string, note: string) => {
-  const t = TYPES[code];
-  return { code, ko: t ? t.ko : code, note };
-};
+const MATCH = (code: string, note: string) => ({ code, note });
 
 export const TYPES: Record<string, TypeData> = {
   INTJ: {
