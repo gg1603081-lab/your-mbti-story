@@ -149,7 +149,8 @@ export function computeResult(answers: Answers): Result {
 
   for (const axis of AXES) {
     const t = totals[axis.key];
-    const rightPct = Math.round((t.right / count[axis.key]) * 100);
+    const n = count[axis.key];
+    const rightPct = n ? Math.round((t.right / n) * 100) : 50;
     percentages[axis.key] = Math.min(100, Math.max(0, rightPct));
     letters.push(rightPct >= 50 ? axis.right : axis.left);
   }
