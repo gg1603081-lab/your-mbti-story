@@ -154,9 +154,9 @@ function Result() {
         <section className="mt-14 flex flex-wrap items-center gap-3 border-t border-line pt-10">
           <button
             onClick={share}
-            className="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-accent"
+            className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-accent"
           >
-            {copied ? "결과가 복사됐어요" : "결과 공유"}
+            <span>{copied ? "결과가 복사됐어요" : "결과 공유"}</span>
             <span className="font-mono text-xs">↗</span>
           </button>
           <button
