@@ -1,7 +1,14 @@
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import type { TypeData } from "@/lib/mbti";
 
-function SectionLabel({ children, tone = "accent" }: { children: React.ReactNode; tone?: "accent" | "muted" }) {
+function SectionLabel({
+  children,
+  tone = "accent",
+}: {
+  children: ReactNode;
+  tone?: "accent" | "muted";
+}) {
   return (
     <p
       className={`mb-4 font-mono text-[11px] tracking-[0.28em] uppercase ${
