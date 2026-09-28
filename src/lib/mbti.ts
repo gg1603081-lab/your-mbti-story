@@ -129,7 +129,8 @@ export function computeResult(answers: Answers): Result {
 
   for (const q of QUESTIONS) {
     const raw = answers[q.id];
-    const v = typeof raw === "number" ? Math.max(-2, Math.min(2, raw)) : 0;
+    if (typeof raw !== "number") continue;
+    const v = Math.max(-2, Math.min(2, raw));
     const towardPole = (v + 2) / 4;
     const other = 1 - towardPole;
     const axis = AXES.find((a) => a.key === q.axis)!;
