@@ -1,8 +1,8 @@
 import { useNavigate, createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AxisScale } from "@/components/AxisScale";
 import { QUESTIONS, SCALE, computeResult, type Answers } from "@/lib/mbti";
-import { saveAnswers } from "@/lib/quiz-store";
+import { loadAnswers, recordResult, saveAnswers } from "@/lib/quiz-store";
 
 export const Route = createFileRoute("/test")({
   component: Test,
@@ -23,6 +23,20 @@ function Test() {
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
 
+  useEffect(() => {
+    let alive = true;
+    loadAnswers().then((saved) => {
+      if (!alive || !saved) return;
+      const firstOpen = QUESTIONS.findIndex((q) => saved[q.id] === undefined);
+      if (firstOpen === -1) return;
+      setAnswers(saved as Answers);
+      setIndex(firstOpen);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const question = QUESTIONS[index];
   const live = useMemo(() => computeResult(answers), [answers]);
   const done = Object.keys(answers).length;
@@ -34,14 +48,16 @@ function Test() {
     const next: Answers = { ...answers, [question.id]: value };
     setAnswers(next);
     setPicked(value);
+    const saving = saveAnswers(next);
 
-    window.setTimeout(() => {
+    window.setTimeout(async () => {
       const nextQ = QUESTIONS[index + 1];
       if (nextQ) {
         setIndex(index + 1);
         setPicked(next[nextQ.id] ?? null);
       } else {
-        saveAnswers(next);
+        await saving;
+        await recordResult(computeResult(next).code, next);
         navigate({ to: "/result" });
       }
     }, 320);
