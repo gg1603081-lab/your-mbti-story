@@ -27,6 +27,8 @@ function Test() {
   const live = useMemo(() => computeResult(answers), [answers]);
   const done = Object.keys(answers).length;
 
+  if (!question) return null;
+
   const pick = (value: number) => {
     if (picked !== null) return;
     const next: Answers = { ...answers, [question.id]: value };
@@ -34,9 +36,10 @@ function Test() {
     setPicked(value);
 
     window.setTimeout(() => {
-      if (index + 1 < QUESTIONS.length) {
+      const nextQ = QUESTIONS[index + 1];
+      if (nextQ) {
         setIndex(index + 1);
-        setPicked(answers[QUESTIONS[index + 1].id] ?? null);
+        setPicked(next[nextQ.id] ?? null);
       } else {
         saveAnswers(next);
         navigate({ to: "/result" });
@@ -45,10 +48,10 @@ function Test() {
   };
 
   const back = () => {
-    if (index === 0) return;
-    const prev = index - 1;
-    setIndex(prev);
-    setPicked(answers[QUESTIONS[prev].id] ?? null);
+    const prevQ = QUESTIONS[index - 1];
+    if (!prevQ) return;
+    setIndex(index - 1);
+    setPicked(answers[prevQ.id] ?? null);
   };
 
   const progress = ((index + (picked !== null ? 1 : 0)) / QUESTIONS.length) * 100;

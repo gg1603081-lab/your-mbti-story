@@ -51,6 +51,7 @@ function Types() {
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TYPE_CODES.map((code) => {
             const t = TYPES[code];
+            if (!t) return null;
             return (
               <Link
                 key={code}
